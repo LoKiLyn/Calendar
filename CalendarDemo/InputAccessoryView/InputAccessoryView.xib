@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="InputAccessoryView"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ynt-xz-T00" userLabel="Cancel Button">
+                    <rect key="frame" x="16" y="0.0" width="44" height="44"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="Ynt-xz-T00" secondAttribute="height" multiplier="1:1" id="437-9c-Bh5"/>
+                        <constraint firstAttribute="width" constant="44" id="w6z-EI-wqr"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <state key="normal" title="取消">
+                        <color key="titleColor" red="0.51764705879999995" green="0.69019607839999997" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="cancelButtonPressedWithSender:" destination="-1" eventType="touchUpInside" id="awn-wx-E8M"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="icT-TX-rYF" userLabel="Commit Button">
+                    <rect key="frame" x="315" y="0.0" width="44" height="44"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="44" id="U9c-PG-o6z"/>
+                        <constraint firstAttribute="width" secondItem="icT-TX-rYF" secondAttribute="height" multiplier="1:1" id="xJC-E1-lSs"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <state key="normal" title="保存">
+                        <color key="titleColor" red="0.51764705879999995" green="0.69019607839999997" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="commitButtonPressedWithSender:" destination="-1" eventType="touchUpInside" id="rOU-6a-UA7"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" red="0.98431372549999996" green="0.34901960780000002" blue="0.3411764706" alpha="1" colorSpace="calibratedRGB"/>
+            <color key="tintColor" red="0.25490196079999999" green="0.33333333329999998" blue="0.49019607840000001" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="icT-TX-rYF" secondAttribute="trailing" constant="16" id="Y25-mi-iqb"/>
+                <constraint firstItem="icT-TX-rYF" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="nya-51-l6J"/>
+                <constraint firstItem="Ynt-xz-T00" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="pIS-O2-qdq"/>
+                <constraint firstItem="Ynt-xz-T00" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="16" id="yhR-YU-vif"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+        </view>
+    </objects>
+</document>

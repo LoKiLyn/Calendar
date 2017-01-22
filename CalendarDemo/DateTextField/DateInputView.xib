@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="DateTextField" customModule="CalendarDemo" customModuleProvider="target">
+            <connections>
+                <outlet property="dateInputView" destination="iN0-l3-epB" id="aeT-bm-bJU"/>
+                <outlet property="datePicker" destination="VJN-aa-9LO" id="vua-Eo-HLv"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="216"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="VJN-aa-9LO" userLabel="Input DatePicker">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="216"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="216" id="S2S-Dv-oZz"/>
+                    </constraints>
+                    <date key="date" timeIntervalSinceReferenceDate="474633137.95830101">
+                        <!--2016-01-16 10:32:17 +0000-->
+                    </date>
+                    <locale key="locale" localeIdentifier="zh"/>
+                </datePicker>
+            </subviews>
+            <color key="backgroundColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+            <color key="tintColor" red="0.25490196079999999" green="0.33333333329999998" blue="0.49019607840000001" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstItem="VJN-aa-9LO" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="FBt-Zk-oSD"/>
+                <constraint firstAttribute="trailing" secondItem="VJN-aa-9LO" secondAttribute="trailing" id="ZqJ-CR-hSu"/>
+                <constraint firstAttribute="bottom" secondItem="VJN-aa-9LO" secondAttribute="bottom" id="ofj-p2-tF7"/>
+                <constraint firstItem="VJN-aa-9LO" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="xlw-5u-U12"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+        </view>
+    </objects>
+</document>
