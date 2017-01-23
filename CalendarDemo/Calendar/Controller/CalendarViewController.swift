@@ -27,15 +27,17 @@ class CalendarViewController: UIViewController {
             self.collectionView.reloadData()
         }
     }
-
+    let leftSwipeGesture = UISwipeGestureRecognizer()
+    let rightSwipeGesture = UISwipeGestureRecognizer()
+    
     
     //MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        currentDateTextField.inputView = datePicker
         currentDateTextField.addTarget(self, action: #selector(textFieldDidChanged), for: UIControlEvents.editingDidEnd)
         configCurrentDateTitle()
+        configGestures()
     }
 
     override func didReceiveMemoryWarning() {
@@ -64,6 +66,20 @@ class CalendarViewController: UIViewController {
         return totalDaysThisMonth.count
     }
     
+    internal func textFieldDidChanged(){
+        self.date = currentDateTextField.selectedDate!
+    }
+    
+    internal func gestureDidSwiped(sender: UISwipeGestureRecognizer) {
+        if sender.direction == .left {
+            print("SwipeLeft")
+            nextButtonPressed(sender)
+        }else {
+            print("SwipeRight")
+            previousButtonPressed(sender)
+        }
+    }
+    
     internal func configCurrentDateTitle() {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MMMM-yyyy"
@@ -71,14 +87,19 @@ class CalendarViewController: UIViewController {
         self.currentDateTextField.text = dateString
     }
     
-    internal func textFieldDidChanged(){
-        self.date = currentDateTextField.selectedDate!
+    internal func configGestures() {
+        leftSwipeGesture.direction = .left
+        rightSwipeGesture.direction = .right
+        leftSwipeGesture.addTarget(self, action: #selector(gestureDidSwiped))
+        rightSwipeGesture.addTarget(self, action: #selector(gestureDidSwiped))
+        self.view.addGestureRecognizer(leftSwipeGesture)
+        self.view.addGestureRecognizer(rightSwipeGesture)
     }
     
     
     //MARK: - Events
     
-    @IBAction func previousButtonPressed(_ sender: UIButton) {
+    @IBAction func previousButtonPressed(_ sender: Any?) {
         var components = DateComponents()
         components.month = -1
         let newDate = Calendar.current.date(byAdding: components, to: date)
@@ -86,7 +107,7 @@ class CalendarViewController: UIViewController {
         configCurrentDateTitle()
     }
     
-    @IBAction func nextButtonPressed(_ sender: UIButton) {
+    @IBAction func nextButtonPressed(_ sender: Any?) {
         var components = DateComponents()
         components.month = 1
         let newDate = Calendar.current.date(byAdding: components, to: date)
@@ -138,7 +159,9 @@ extension CalendarViewController: UICollectionViewDataSource {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.destination.isKind(of: CalendarDetailViewController.self){
-            self.delegate = segue.destination as! CalendarDetailViewController
+            let destinationViewController = segue.destination as! CalendarDetailViewController
+            self.delegate = destinationViewController
+            destinationViewController.delegate = self
         }
     }
 }
@@ -164,5 +187,11 @@ extension CalendarViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         let insets = UIEdgeInsetsMake(0, 0, 10, 0)
         return insets
+    }
+}
+
+extension CalendarViewController: CalendarDetailViewControllerDelegate {
+    func calendarDetailTextFieldInfo(text: String) {
+        self.currentDateTextField.text = text
     }
 }

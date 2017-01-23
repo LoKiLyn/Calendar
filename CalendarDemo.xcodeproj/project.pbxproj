@@ -26,9 +26,9 @@
 		031E05741E2F0B580002A586 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		031E05761E2F0B580002A586 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		031E05791E2F0B580002A586 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		031E057B1E2F0B580002A586 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		031E057B1E2F0B580002A586 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = CalendarDemo/Assets.xcassets; sourceTree = "<group>"; };
 		031E057E1E2F0B580002A586 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		031E05801E2F0B580002A586 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		031E05801E2F0B580002A586 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = CalendarDemo/Info.plist; sourceTree = "<group>"; };
 		03A5D16D1E305A1A00771334 /* DateInputView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DateInputView.xib; sourceTree = "<group>"; };
 		03A5D16E1E305A1A00771334 /* DateTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateTextField.swift; sourceTree = "<group>"; };
 		03A5D1701E305A1A00771334 /* InputAccessoryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputAccessoryView.swift; sourceTree = "<group>"; };
@@ -53,6 +53,9 @@
 			isa = PBXGroup;
 			children = (
 				031E05731E2F0B580002A586 /* CalendarDemo */,
+				031E057B1E2F0B580002A586 /* Assets.xcassets */,
+				031E057D1E2F0B580002A586 /* LaunchScreen.storyboard */,
+				031E05801E2F0B580002A586 /* Info.plist */,
 				031E05721E2F0B580002A586 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -71,9 +74,6 @@
 				031E05741E2F0B580002A586 /* AppDelegate.swift */,
 				031E05761E2F0B580002A586 /* ViewController.swift */,
 				031E05781E2F0B580002A586 /* Main.storyboard */,
-				031E057B1E2F0B580002A586 /* Assets.xcassets */,
-				031E057D1E2F0B580002A586 /* LaunchScreen.storyboard */,
-				031E05801E2F0B580002A586 /* Info.plist */,
 				03A5D1761E305B7000771334 /* Calendar */,
 				03A5D16C1E305A1A00771334 /* DateTextField */,
 				03A5D16F1E305A1A00771334 /* InputAccessoryView */,
@@ -226,6 +226,7 @@
 				031E057E1E2F0B580002A586 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			path = CalendarDemo;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

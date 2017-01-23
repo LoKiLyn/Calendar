@@ -17,9 +17,7 @@ class CalendarDetailViewController: UIViewController {
     // MARK: - Private
     
     @IBOutlet weak var infoLabel: UILabel!
-    
     @IBOutlet weak var infoTextField: UITextField!
-    
     weak var delegate: CalendarDetailViewControllerDelegate?
     
     
@@ -62,5 +60,12 @@ class CalendarDetailViewController: UIViewController {
 extension CalendarDetailViewController: CalendarViewControllerDelegate {
     func calendarDidSelect(index: IndexPath, date: DateComponents) {
         self.infoLabel.text = "SelectDate:\(date.year!) year" + "\(date.month!) month" + "\(date.day!) day"
+    }
+}
+
+extension CalendarDetailViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
 }
