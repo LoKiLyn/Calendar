@@ -16,33 +16,56 @@ class CalendarViewController: UIViewController {
     
     //MARK: - Property
     
-    @IBOutlet weak var previousButton: UIButton!
-    @IBOutlet weak var currentDateTextField: DateTextField!
-    @IBOutlet weak var nextButton: UIButton!
-    @IBOutlet weak var collectionView: UICollectionView!
-    weak var delegate: CalendarViewControllerDelegate?
+    @IBOutlet internal weak var previousButton: UIButton!
+    @IBOutlet internal weak var currentDateTextField: DateTextField!
+    @IBOutlet internal weak var nextButton: UIButton!
+    @IBOutlet internal weak var collectionView: UICollectionView!
+    @IBOutlet internal weak var dateLabel: UILabel!
+    @IBOutlet internal weak var dailyTextView: UITextView!
+    internal let leftSwipeGesture = UISwipeGestureRecognizer()
+    internal let rightSwipeGesture = UISwipeGestureRecognizer()
     internal let dateArray = ["日","一","二","三","四","五","六"]
     internal var date = Date(){
         didSet{
             self.collectionView.reloadData()
         }
     }
-    let leftSwipeGesture = UISwipeGestureRecognizer()
-    let rightSwipeGesture = UISwipeGestureRecognizer()
+    internal var selectedIndexPath: IndexPath = []
+    internal var selectedComponents: DateComponents = DateComponents(){
+        didSet{
+            self.dailyTextView.text = UserDefaults.standard.value(forKey: selectedComponents.description) as! String!
+            self.dateLabel.text = "\(selectedComponents.year!)年\(selectedComponents.month!)月\(selectedComponents.day!)日"
+        }
+    }
+    
+    weak var delegate: CalendarViewControllerDelegate?
     
     
     //MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        selectedComponents = dateInfo(date: date)
         currentDateTextField.addTarget(self, action: #selector(textFieldDidChanged), for: UIControlEvents.editingDidEnd)
+        dailyTextView.text = UserDefaults.standard.value(forKey:dateInfo(date: date).description) as! String!
         configCurrentDateTitle()
         configGestures()
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(false)
+        self.dailyTextView.text = UserDefaults.standard.value(forKey: selectedComponents.description) as! String!
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.destination.isKind(of: CalendarDetailViewController.self){
+            let destinationViewController = segue.destination as! CalendarDetailViewController
+            self.delegate = destinationViewController
+        }
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
     
     
@@ -68,16 +91,6 @@ class CalendarViewController: UIViewController {
     
     internal func textFieldDidChanged(){
         self.date = currentDateTextField.selectedDate!
-    }
-    
-    internal func gestureDidSwiped(sender: UISwipeGestureRecognizer) {
-        if sender.direction == .left {
-            print("SwipeLeft")
-            nextButtonPressed(sender)
-        }else {
-            print("SwipeRight")
-            previousButtonPressed(sender)
-        }
     }
     
     internal func configCurrentDateTitle() {
@@ -114,7 +127,42 @@ class CalendarViewController: UIViewController {
         date = newDate!
         configCurrentDateTitle()
     }
+
+    @IBAction func editButtonPressed(_ sender: Any) {
+        self.dailyTextView.resignFirstResponder()
+        performSegue(withIdentifier: "presentCalendarDetail", sender: self)
+        self.delegate?.calendarDidSelect(index: selectedIndexPath, date: selectedComponents)
+    }
     
+    internal func gestureDidSwiped(sender: UISwipeGestureRecognizer) {
+        if sender.direction == .left {
+            print("SwipeLeft")
+            nextButtonPressed(sender)
+        }else {
+            print("SwipeRight")
+            previousButtonPressed(sender)
+        }
+    }
+    
+    
+    // MARK: - Notification
+    /*
+    internal func regNoti() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChangeFrame), name: .UIKeyboardWillChangeFrame, object: nil)
+    }
+    
+    func keyboardWillChangeFrame(noti: Notification) {
+        let infoDict = noti.userInfo
+        let beginKeyboardRect = (infoDict?[UIKeyboardFrameBeginUserInfoKey] as AnyObject).cgRectValue
+        let endKeyboardRect = (infoDict?[UIKeyboardFrameEndUserInfoKey] as AnyObject).cgRectValue
+        let yOffset = (endKeyboardRect?.origin.y)! - (beginKeyboardRect?.origin.y)!
+        var inputFieldRect = self.view.frame
+        inputFieldRect.origin.y += yOffset
+        UIView.animate(withDuration: 0.5, animations: {
+            self.view.frame = inputFieldRect
+        })
+    }
+    */
 }
 
 extension CalendarViewController: UICollectionViewDataSource {
@@ -156,23 +204,15 @@ extension CalendarViewController: UICollectionViewDataSource {
             return cell
         }
     }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.destination.isKind(of: CalendarDetailViewController.self){
-            let destinationViewController = segue.destination as! CalendarDetailViewController
-            self.delegate = destinationViewController
-            destinationViewController.delegate = self
-        }
-    }
 }
 
 extension CalendarViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.item >= firstWeekDayThisMonth(date: date) - 1 && (indexPath.item - firstWeekDayThisMonth(date: date) + 2) <= totalDaysThisMonth(date: date) {
-        var selectedComponents = dateInfo(date: date)
-        selectedComponents.day = indexPath.item - firstWeekDayThisMonth(date: date) + 2
-        performSegue(withIdentifier: "presentCalendarDetail", sender: self)
-        self.delegate?.calendarDidSelect(index: indexPath, date: selectedComponents)
+            var selectedComponents = dateInfo(date: date)
+            selectedComponents.day = indexPath.item - firstWeekDayThisMonth(date: date) + 2
+            self.selectedComponents = selectedComponents
+            self.selectedIndexPath = indexPath
         }
     }
 }
@@ -187,11 +227,5 @@ extension CalendarViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         let insets = UIEdgeInsetsMake(0, 0, 10, 0)
         return insets
-    }
-}
-
-extension CalendarViewController: CalendarDetailViewControllerDelegate {
-    func calendarDetailTextFieldInfo(text: String) {
-        self.currentDateTextField.text = text
     }
 }

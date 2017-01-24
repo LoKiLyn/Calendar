@@ -25,7 +25,7 @@ class CalendarDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
     }
 
@@ -42,9 +42,18 @@ class CalendarDetailViewController: UIViewController {
     }
 
     @IBAction func doneButtonPressed(_ sender: UIButton) {
-        self.delegate?.calendarDetailTextFieldInfo(text: self.infoTextField.text!)
+        saveText()
+        self.infoTextField.resignFirstResponder()
         dismiss(animated: true)
     }
+    
+    // MARK: - Public
+    
+    func saveText() {
+        let userDefaults = UserDefaults.standard
+        userDefaults.set(self.infoTextField.text,forKey:infoLabel.text!)
+    }
+    
     /*
     // MARK: - Navigation
 
@@ -59,7 +68,8 @@ class CalendarDetailViewController: UIViewController {
 
 extension CalendarDetailViewController: CalendarViewControllerDelegate {
     func calendarDidSelect(index: IndexPath, date: DateComponents) {
-        self.infoLabel.text = "SelectDate:\(date.year!) year" + "\(date.month!) month" + "\(date.day!) day"
+//        self.infoLabel.text = "SelectDate:\(date.year!) year" + "\(date.month!) month" + "\(date.day!) day"
+        self.infoLabel.text = date.description
     }
 }
 
