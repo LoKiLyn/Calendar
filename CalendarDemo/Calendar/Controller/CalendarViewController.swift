@@ -30,7 +30,7 @@ class CalendarViewController: UIViewController {
             self.collectionView.reloadData()
         }
     }
-    internal var selectedIndexPath: IndexPath = []
+    internal var selectedIndexPath: IndexPath?
     internal var selectedComponents: DateComponents = DateComponents(){
         didSet{
             self.dailyTextView.text = UserDefaults.standard.value(forKey: selectedComponents.description) as! String!
@@ -131,7 +131,7 @@ class CalendarViewController: UIViewController {
     @IBAction func editButtonPressed(_ sender: Any) {
         self.dailyTextView.resignFirstResponder()
         performSegue(withIdentifier: "presentCalendarDetail", sender: self)
-        self.delegate?.calendarDidSelect(index: selectedIndexPath, date: selectedComponents)
+        self.delegate?.calendarDidSelect(index: selectedIndexPath!, date: selectedComponents)
     }
     
     internal func gestureDidSwiped(sender: UISwipeGestureRecognizer) {
@@ -165,6 +165,8 @@ class CalendarViewController: UIViewController {
     */
 }
 
+// MARK: - Extensions
+
 extension CalendarViewController: UICollectionViewDataSource {
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -178,8 +180,8 @@ extension CalendarViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let currentDateComponents = dateInfo(date: Date())
-        var selectedComponents = dateInfo(date: date)
-        selectedComponents.day = indexPath.item - firstWeekDayThisMonth(date: date) + 2
+        var selectedComponent = dateInfo(date: date)
+        selectedComponent.day = indexPath.item - firstWeekDayThisMonth(date: date) + 2
         
         if indexPath.section == 0 {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DayOfAWeekCell", for: indexPath) as! CalendarDateCell
@@ -192,7 +194,7 @@ extension CalendarViewController: UICollectionViewDataSource {
                 cell.backgroundColor = UIColor.clear
             }else if indexPath.item >= firstWeekDayThisMonth(date: date) - 1 && (indexPath.item - firstWeekDayThisMonth(date: date) + 2) <= totalDaysThisMonth(date: date) {
                 cell.dateLabel.text = "\(indexPath.item - firstWeekDayThisMonth(date: date) + 2)"
-                if currentDateComponents == selectedComponents {
+                if currentDateComponents == selectedComponent {
                     cell.backgroundColor = UIColor.orange
                 }else{
                     cell.backgroundColor = UIColor.green
@@ -208,11 +210,18 @@ extension CalendarViewController: UICollectionViewDataSource {
 
 extension CalendarViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if indexPath.item >= firstWeekDayThisMonth(date: date) - 1 && (indexPath.item - firstWeekDayThisMonth(date: date) + 2) <= totalDaysThisMonth(date: date) {
-            var selectedComponents = dateInfo(date: date)
-            selectedComponents.day = indexPath.item - firstWeekDayThisMonth(date: date) + 2
-            self.selectedComponents = selectedComponents
-            self.selectedIndexPath = indexPath
+        if indexPath.section == 1{
+            if indexPath.item >= firstWeekDayThisMonth(date: date) - 1 && (indexPath.item - firstWeekDayThisMonth(date: date) + 2) <= totalDaysThisMonth(date: date) {
+                var selectedComponent = dateInfo(date: date)
+                selectedComponent.day = indexPath.item - firstWeekDayThisMonth(date: date) + 2
+                let currentDateComponents = dateInfo(date: Date())
+                if selectedIndexPath != nil {
+                    currentDateComponents == self.selectedComponents ? (collectionView.cellForItem(at: selectedIndexPath!)?.backgroundColor = UIColor.orange) : (collectionView.cellForItem(at: selectedIndexPath!)?.backgroundColor = UIColor.green)
+                }
+                self.selectedIndexPath = indexPath
+                self.selectedComponents = selectedComponent
+                collectionView.cellForItem(at: selectedIndexPath!)?.backgroundColor = UIColor.blue
+            }
         }
     }
 }

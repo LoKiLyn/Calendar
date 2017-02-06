@@ -38,12 +38,22 @@ class CalendarDetailViewController: UIViewController {
     // MARK: - Events
     
     @IBAction func backButtonPressed(_ sender: UIButton) {
-        dismiss(animated: true)
+        self.infoTextField.resignFirstResponder()
+        //alert弹出
+        let alert = UIAlertController(title: "Warning", message: "Quit without saving？", preferredStyle: UIAlertControllerStyle.alert)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: {
+            action in
+                self.dismiss(animated: true)
+            })
+        alert.addAction(cancelAction)
+        alert.addAction(okAction)
+        self.present(alert, animated: true, completion: nil)
     }
 
     @IBAction func doneButtonPressed(_ sender: UIButton) {
-        saveText()
         self.infoTextField.resignFirstResponder()
+        saveText()
         dismiss(animated: true)
     }
     
