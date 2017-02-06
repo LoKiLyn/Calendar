@@ -271,9 +271,9 @@
                                 <rect key="frame" x="0.0" y="84" width="414" height="652"/>
                                 <subviews>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="SAz-J8-kpu">
-                                        <rect key="frame" x="159" y="88.666666666666657" width="97" height="30"/>
+                                        <rect key="frame" x="49" y="89" width="319" height="30"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="97" id="J3c-56-Vo1"/>
+                                            <constraint firstAttribute="width" constant="319" id="J3c-56-Vo1"/>
                                         </constraints>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -293,7 +293,7 @@
                                 <constraints>
                                     <constraint firstItem="SAz-J8-kpu" firstAttribute="top" secondItem="vim-JF-QHp" secondAttribute="bottom" constant="-109.33333333333334" id="0we-Yy-4Lv"/>
                                     <constraint firstItem="vim-JF-QHp" firstAttribute="centerY" secondItem="SzH-QC-6A2" secondAttribute="centerY" constant="-138.5" id="1iX-gJ-vqR"/>
-                                    <constraint firstItem="SAz-J8-kpu" firstAttribute="centerX" secondItem="vim-JF-QHp" secondAttribute="centerX" id="ENM-vd-XKN"/>
+                                    <constraint firstItem="SAz-J8-kpu" firstAttribute="centerX" secondItem="vim-JF-QHp" secondAttribute="centerX" constant="1.1666666666666856" id="ENM-vd-XKN"/>
                                     <constraint firstItem="vim-JF-QHp" firstAttribute="centerX" secondItem="SzH-QC-6A2" secondAttribute="centerX" id="bp2-xA-KuR"/>
                                 </constraints>
                             </view>

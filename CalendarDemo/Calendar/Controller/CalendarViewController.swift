@@ -180,8 +180,8 @@ extension CalendarViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let currentDateComponents = dateInfo(date: Date())
-        var selectedComponent = dateInfo(date: date)
-        selectedComponent.day = indexPath.item - firstWeekDayThisMonth(date: date) + 2
+        var indexPathComponent = dateInfo(date: date)
+        indexPathComponent.day = indexPath.item - firstWeekDayThisMonth(date: date) + 2
         
         if indexPath.section == 0 {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DayOfAWeekCell", for: indexPath) as! CalendarDateCell
@@ -194,9 +194,15 @@ extension CalendarViewController: UICollectionViewDataSource {
                 cell.backgroundColor = UIColor.clear
             }else if indexPath.item >= firstWeekDayThisMonth(date: date) - 1 && (indexPath.item - firstWeekDayThisMonth(date: date) + 2) <= totalDaysThisMonth(date: date) {
                 cell.dateLabel.text = "\(indexPath.item - firstWeekDayThisMonth(date: date) + 2)"
-                if currentDateComponents == selectedComponent {
+                if currentDateComponents == indexPathComponent {
+                    if selectedIndexPath == nil {
+                        selectedIndexPath = indexPath
+                    }
                     cell.backgroundColor = UIColor.orange
-                }else{
+                }else if selectedComponents == indexPathComponent {
+                    cell.backgroundColor = UIColor.blue
+                }
+                else {
                     cell.backgroundColor = UIColor.green
                 }
             }else {
@@ -210,7 +216,7 @@ extension CalendarViewController: UICollectionViewDataSource {
 
 extension CalendarViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if indexPath.section == 1{
+        if indexPath.section == 1 {
             if indexPath.item >= firstWeekDayThisMonth(date: date) - 1 && (indexPath.item - firstWeekDayThisMonth(date: date) + 2) <= totalDaysThisMonth(date: date) {
                 var selectedComponent = dateInfo(date: date)
                 selectedComponent.day = indexPath.item - firstWeekDayThisMonth(date: date) + 2

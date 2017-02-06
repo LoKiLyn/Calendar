@@ -54,8 +54,15 @@ class CalendarDetailViewController: UIViewController {
     @IBAction func doneButtonPressed(_ sender: UIButton) {
         self.infoTextField.resignFirstResponder()
         saveText()
-        dismiss(animated: true)
+        let alert = UIAlertController(title: "Save succeeded.", message: nil, preferredStyle: UIAlertControllerStyle.alert)
+        self.present(alert, animated: true) { 
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2, execute: { 
+                self.dismiss(animated: true)
+                self.dismiss(animated: true)
+            })
+        }
     }
+    
     
     // MARK: - Public
     
