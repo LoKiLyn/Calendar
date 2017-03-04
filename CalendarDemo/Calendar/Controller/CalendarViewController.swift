@@ -199,16 +199,22 @@ extension CalendarViewController: UICollectionViewDataSource {
                         selectedIndexPath = indexPath
                     }
                     cell.backgroundColor = UIColor.orange
-                }else if selectedComponents == indexPathComponent {
-                    cell.backgroundColor = UIColor.blue
-                }
-                else {
+                }else {
                     cell.backgroundColor = UIColor.green
                 }
             }else {
                 cell.backgroundColor = UIColor.clear
                 cell.dateLabel.text = " "
             }
+            
+            if UserDefaults.standard.value(forKey: indexPathComponent.description) != nil {
+                cell.backgroundColor = UIColor.brown
+            }
+            if selectedComponents == indexPathComponent {
+                cell.backgroundColor = UIColor.blue
+            }
+
+            
             return cell
         }
     }
@@ -226,6 +232,7 @@ extension CalendarViewController: UICollectionViewDelegate {
                 }
                 self.selectedIndexPath = indexPath
                 self.selectedComponents = selectedComponent
+                collectionView.reloadData()
                 collectionView.cellForItem(at: selectedIndexPath!)?.backgroundColor = UIColor.blue
             }
         }

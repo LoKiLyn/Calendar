@@ -18,6 +18,7 @@ class CalendarDetailViewController: UIViewController {
     
     @IBOutlet weak var infoLabel: UILabel!
     @IBOutlet weak var infoTextField: UITextField!
+    var dateComponent: DateComponents?
     weak var delegate: CalendarDetailViewControllerDelegate?
     
     
@@ -68,7 +69,8 @@ class CalendarDetailViewController: UIViewController {
     
     func saveText() {
         let userDefaults = UserDefaults.standard
-        userDefaults.set(self.infoTextField.text,forKey:infoLabel.text!)
+        let key = dateComponent!.description
+        userDefaults.set(self.infoTextField.text,forKey:key)
     }
     
     /*
@@ -87,6 +89,7 @@ extension CalendarDetailViewController: CalendarViewControllerDelegate {
     func calendarDidSelect(index: IndexPath, date: DateComponents) {
 //        self.infoLabel.text = "SelectDate:\(date.year!) year" + "\(date.month!) month" + "\(date.day!) day"
         self.infoLabel.text = date.description
+        dateComponent = date
     }
 }
 
